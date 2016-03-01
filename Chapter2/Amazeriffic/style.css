@@ -12,7 +12,7 @@ body{
  header, main, footer{
 	 
 	 min-width : 855px;
-	 padding :25px 0px;
+	 padding :25px 0;
  }
  
  
@@ -32,15 +32,15 @@ body{
 	 
  }
  
- header h1{
+ h1{
 	 
 	 float:left;
-	 width :570 px;
+	 width :570px;
  }
  
- header nav{
+ nav{
 	 float: right;
-	 width :285 px;
+	 width :285px;
 	 
  }
  
@@ -51,7 +51,6 @@ body{
 	  background:white;
 	  overflow:auto;
 	  position:relative;
-	  bottom:0px;
 	  width:100%; /* cause of fixed pos */
 	  height:420px;
 	 
@@ -72,29 +71,41 @@ body{
     width:285px;	
 	}
  
- main .contLeft h2, main .contLeft p, main .contLeft h3{
-	 padding : 10px 0px;
+ 
+ 
+ h2{
+	 padding : 10px 0;
  }
  
- main .contLeft ul{
+ h3{
+	 
+	 padding : 10px 0;
+ }
+ 
+ p{
+	padding : 1px 0;
+ }
+ 
+ 
+ ul{
  
  padding: 10px 25px;
  }
  
- main .contLeft li{
+ li{
 	 padding-left : 2px;
  }
  
 .label{
 	 float :left;
 	 width : 125px;
-	 padding : 10px 0px;
+	 padding : 10px 0;
  }
  
 .input{
 	 float : left;
 	 width:730px;
-	 padding : 10px 0px;
+	 padding : 10px 0;
 	 
  }
 
@@ -102,26 +113,21 @@ body{
 
   footer{
   position:relative;
-  bottom:0px;
   width:100%; /* cause of fixed pos */
   height:140px;
 }
 
- main .container{
   
-	 
- }
- 
  footer .contact {
 	 float:left;
 	 width:570px;
-	 padding : 10px 0px;
+	 padding : 10px 0;
  }
  
  footer .siteMap {
 	 float:right;
 	 width:285px;
-	 padding : 15px 0px;
+	 padding : 15px 0;
  }
  
  

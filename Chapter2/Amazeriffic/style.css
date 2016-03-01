@@ -1,0 +1,128 @@
+*{
+	margin : 0;
+	padding : 0;	
+}
+
+body{
+
+ background : #f9e933;
+ 
+ }
+ 
+ header, main, footer{
+	 
+	 min-width : 855px;
+	 padding :25px 0px;
+ }
+ 
+ 
+ 
+ 
+ header .container,main .container,footer .container{
+	 
+	 max-width : 855px;
+	 margin :auto;
+	 
+	 
+ }
+ 
+ header{
+	 background : white;
+	 overflow :auto;
+	 
+ }
+ 
+ header h1{
+	 
+	 float:left;
+	 width :570 px;
+ }
+ 
+ header nav{
+	 float: right;
+	 width :285 px;
+	 
+ }
+ 
+ 
+ 
+ main {
+	 
+	  background:white;
+	  overflow:auto;
+	  position:relative;
+	  bottom:0px;
+	  width:100%; /* cause of fixed pos */
+	  height:420px;
+	 
+ }
+ 
+ 
+ main .contLeft{
+	 
+	 float:left;
+	 width:570px;
+	 
+	}
+ 
+ 
+ main .contRight{
+	 
+	float:right;
+    width:285px;	
+	}
+ 
+ main .contLeft h2, main .contLeft p, main .contLeft h3{
+	 padding : 10px 0px;
+ }
+ 
+ main .contLeft ul{
+ 
+ padding: 10px 25px;
+ }
+ 
+ main .contLeft li{
+	 padding-left : 2px;
+ }
+ 
+.label{
+	 float :left;
+	 width : 125px;
+	 padding : 10px 0px;
+ }
+ 
+.input{
+	 float : left;
+	 width:730px;
+	 padding : 10px 0px;
+	 
+ }
+
+ 
+
+  footer{
+  position:relative;
+  bottom:0px;
+  width:100%; /* cause of fixed pos */
+  height:140px;
+}
+
+ main .container{
+  
+	 
+ }
+ 
+ footer .contact {
+	 float:left;
+	 width:570px;
+	 padding : 10px 0px;
+ }
+ 
+ footer .siteMap {
+	 float:right;
+	 width:285px;
+	 padding : 15px 0px;
+ }
+ 
+ 
+ 

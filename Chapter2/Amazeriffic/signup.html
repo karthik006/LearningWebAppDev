@@ -3,42 +3,56 @@
   <head>
   <meta charset="utf-8"/>
     <title>Signup</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
   </head>
 
   <body>
     <header>
-      <h1>Sign up and Get connected!!</h1>
+	<div class = "container">
+	<div class = "contLeft">
+	   <h1>Sign up and Get connected!!</h1>
 	   <nav>
-        <a href="index.html">Home</a>
-		<a href="Faq.html">FAQ</a> 
+        <a href="index.html">Home</a> |
+		<a href="Faq.html">FAQ</a> |
 		<a href="#">Support</a>
 	</nav>
+	</div>
+	</div>
 	</header>
-	  <main>
-      <form name = "myform">
-	    <h4>Username <input type = "text" /></h4>
-	    <h4>E-mail <input type = "email" /></h4>
-	    <h4>Password <input type = "password" /></h4>
+	
+	<main>
+	<div class = "container">
+	    <form name = "myform">
+		<div class = "label"><label>Username</label></div><div class= "input"><input type = "text" ><br></div>
+		<div class = "label"><label>E-mail</label></div><div class= "input"><input type = "email" ></div><br>
+		<div class = "label"><label>Password</label></div><div class= "input"><input type = "password"></div><br>
 	    <input type = "submit" value ="Submit"/>
-	  </form>
+	 </form>
+	 </div>
+	 </div>
       </main>
-	  <footer>
+	  
+	<footer>
+	<div class ="container">
       <div class="contact">
         <h5>Contact Us</h5>
         <p>Amazeriffic!</p>
         <p>555 Fiftieth Street</p>
         <p>Asheville, NC 28801</p>
-      </div>
+	 </div>
 
-      <div class="sitemap">
+      <div class="siteMap">
         <h5>Sitemap</h5>
         <ul>
           <li><a href="#">Home</a></li>
           <li><a href="#">About Us</a></li>
           <li><a href="#">Privacy</a></li>
+          <li><a href="#">Support</a></li>
+          <li><a href="#">FAQ</a></li>
           <li><a href="#">Careers</a></li>
         </ul>
       </div>
+	</div>
     </footer>
   </body>
 </html>

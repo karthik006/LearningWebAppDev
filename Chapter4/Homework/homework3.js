@@ -1,3 +1,4 @@
+/*globals $:false,_:false*/
 var main = function () {
    "use strict";
     

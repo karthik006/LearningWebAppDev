@@ -1,7 +1,7 @@
 var main = function () {
     "use strict";
 
-    $.getJSON("cards/aceOfSpades.json", function (card) {
+    $.getJSON("http://localhost:3000/0", function (card) {
         // create an element to hold the card
         var $cardParagraph = $("<p>");
 

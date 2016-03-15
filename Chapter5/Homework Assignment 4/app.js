@@ -36,7 +36,7 @@ var main = function() {
                 data.forEach(function(actor) {
                     if (id === JSON.stringify(actor.id)) {
                       if (JSON.stringify(actor.starred) === "true") {
-                          $(icon).replaceWith("<i id=" +JSON.stringify(actor.id) + " class='material-icons'>star_border</i>");
+                        $(icon).replaceWith("<i id=" +actor.id + " class='material-icons'>star_border</i>");
                             $.ajax({
                                 type: 'PUT',
                                 contentType: 'application/json',
@@ -48,7 +48,7 @@ var main = function() {
                             });
                         }
                         else {
-                            $(icon).replaceWith("<i id=" + JSON.stringify(actor.id) + " class='material-icons'>star</i>");
+                            $(icon).replaceWith("<i id=" + actor.id+ " class='material-icons'>star</i>");
                             $.ajax({
                                 type: 'PUT',
                                 contentType: 'application/json',

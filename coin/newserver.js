@@ -1,10 +1,15 @@
-var express = require("express"),
-    redis = require("redis"),
-    http = require("http"),
-    app = express(),
-    bodyParser = require('body-parser');
+// Client-side code
+/* jshint browser: true, jquery: true, curly: true, eqeqeq: true, forin: true, immed: true, indent: 4, latedef: true, newcap: true, nonew: true, quotmark: double, undef: true, unused: true, strict: true, trailing: true */
+// Server-side code
+/* jshint node: true, curly: true, eqeqeq: true, forin: true, immed: true, indent: 4, latedef: true, newcap: true, nonew: true, quotmark: double, undef: true, unused: true, strict: true, trailing: true */
+"use strict";
+var  express = require("express");
+var  redis = require("redis");
+var  app = express();
+var  bodyParser = require("body-parser");
 
-redisClient = redis.createClient();
+
+var redisClient = redis.createClient();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
@@ -19,8 +24,8 @@ redisClient.mget(["wins", "losses"], function (err, results) {
         // exit the function
         return;
     }
-    wins = parseInt(results[0], 10) || 0;
-    losses = parseInt(results[1], 10) || 0;
+   var wins = parseInt(results[0], 10) || 0;
+   var losses = parseInt(results[1], 10) || 0;
 
     app.post("/flip", function (req, res) {
 
@@ -29,7 +34,7 @@ redisClient.mget(["wins", "losses"], function (err, results) {
         console.log("I choose " + selection);
 
 
-        var result = Math.floor(Math.random() * 2) === 0 ? 'heads' : 'tails';
+        var result = Math.floor(Math.random() * 2) === 0 ? "heads" : "tails";
         console.log("Randomly generated: " + result);
 
 
@@ -74,5 +79,5 @@ app.get("/stats", function (req, res) {
 });
 });
 app.listen(3000, function () {
-    console.log('listening on port 3000');
+    console.log("listening on port 3000");
 });

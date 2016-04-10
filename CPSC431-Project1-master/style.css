@@ -1,0 +1,79 @@
+.main-container{
+	position: absolute;
+}
+
+.login-area{
+
+float :right;
+}
+
+.votes{
+	float: left;
+    margin-right: 7px;
+    margin-left: 7px;
+    background: transparent;
+    overflow: hidden;
+	}
+
+	.Content-List {
+    overflow: hidden;
+    margin-left: 3px;
+    opacity: 1;
+	padding: 10px 20px;
+}
+
+.postsContainer{
+	 margin: 10px;
+   border: 2px solid black;
+	 position: relative;
+	 float: left;
+	 width: 70%;
+}
+
+
+.postContent
+{
+	  margin: 0;
+    margin-bottom: 8px;
+    padding: 20px 10px;
+}
+
+.na{
+	/*float : right;*/
+	/*display :inline;*/
+  padding: 20px 10px;
+}
+
+.la{
+	/*display :inline;*/
+	padding-bottom: 109px;
+}
+
+.logReg{
+	margin: 10px;
+	position: relative;
+	float: right;
+	width: 25%;
+
+}
+
+.lacontainer{
+/* background: #FF512F; /* fallback for old browsers */
+/*background: -webkit-linear-gradient(to left, #FF512F , #F09819); /* Chrome 10-25, Safari 5.1-6 */
+/*background: linear-gradient(to left, #FF512F , #F09819); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.header{
+
+	align:center;
+	display :inline;
+}
+
+
+.voteUpButton{
+  cursor: pointer;
+}
+
+.voteDownButton{
+	cursor: pointer;
+}

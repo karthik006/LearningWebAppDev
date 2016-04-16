@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>CS431-Project1</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="reddit.js"></script>
+    <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+    <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+</head>
+
+<body>
+    <header>
+
+        <fieldset>
+            <form role="form">
+                <div class="form-group">
+                    <input type="search" class="form-control input-lg" id="search" placeholder="Search....">
+                </div>
+            </form>
+            <div class="top-menu">
+                <div class="tabs">
+                    <a href=""><span class="active">Newest</span></a><a href=""><span>Oldest</span></a></a>
+                </div>
+            </div>
+        </fieldset>
+    </header>
+    <main>
+        <div class="main-container">
+            <div class="postsContainer">
+            </div>
+
+            <div class="logReg">
+                <fieldset class="lacontainer">
+                    <fieldset class="la">
+                        <legend>Login:</legend><br><br> Username:
+                        <input type="text" placeholder="username" id="username"><br>
+                        <br> Password:
+                        <input type="password" placeholder="password" id="password">
+                        <br><br>
+                        <button id="login">login</button>
+                        <button id="logout">logout</button>
+                    </fieldset>
+                    <fieldset class="na">
+                        <legend>Register:</legend><br><br> Username:
+                        <input type="text" placeholder="username" id="reguser"><br>
+                        <br> Password:
+                        <input type="password" placeholder="password" id="regpass">
+                        <br><br> confirm
+                        <br> Password:
+                        <input type="password" placeholder="password" id="confirmpass">
+                        <br><br><br>
+                        <button id="Register">Register</button>
+                    </fieldset>
+                </fieldset>
+            </div>
+
+        </div>
+    </main>
+    <footer>
+        <div class="footer-container">
+        </div>
+    </footer>
+
+</body>
+
+</html>

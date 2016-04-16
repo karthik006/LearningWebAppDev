@@ -1,10 +1,14 @@
-var express = require('express');
-var mongodb = require('mongodb');
-var mongoose = require('mongoose');
+// Client-side code
+/* jshint browser: true, jquery: true, curly: true, eqeqeq: true, forin: true, immed: true, indent: 4, latedef: true, newcap: true, nonew: true, quotmark: double, undef: true, unused: true, strict: true, trailing: true */
+// Server-side code
+/* jshint node: true, curly: true, eqeqeq: true, forin: true, immed: true, indent: 4, latedef: true, newcap: true, nonew: true, quotmark: double, undef: true, unused: true, strict: true, trailing: true */
+"use strict";
+var express = require("express");
+var mongoose = require("mongoose");
 var  app = express();
 var  bodyParser = require("body-parser");
-var url = require('url');
-mongoose.connect('mongodb://localhost/links');
+mongoose.connect("mongodb://localhost/links");
+
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -16,15 +20,16 @@ var linkSchema = mongoose.Schema({
     clicks : Number
 
 });
-var Links = mongoose.model('Links',linkSchema);
+var Links = mongoose.model("Links",linkSchema);
 
 app.post("/links", function (req, res) {
+
     console.log(req.body);
-    var newLinks = Links({"title":req.body.title,
+    var newLinks = new Links({"title":req.body.title,
         "link":req.body.link,
         "clicks":0});
 
-    newLinks.save(function (error, result) {
+    newLinks.save(function (error) {
         if (error !== null) {
             console.log(error);
             res.send("ERROR");
@@ -62,8 +67,8 @@ app.get("/click/:title", function (req, res) {
             console.log(err);
             res.send("ERROR");
         }
-       console.log(result);
-        res.redirect(result.link)
+        console.log(result);
+        res.redirect(result.link);
     });
 
 

@@ -5,8 +5,8 @@
 "use strict";
 var express = require("express");
 var mongoose = require("mongoose");
-var app = express();
-var bodyParser = require("body-parser");
+var  app = express();
+var  bodyParser = require("body-parser");
 mongoose.connect("mongodb://localhost/links");
 
 app.use(bodyParser.urlencoded({
@@ -15,21 +15,19 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 var linkSchema = mongoose.Schema({
 
-    title: String,
-    link: String,
-    clicks: Number
+    title : String,
+    link : String,
+    clicks : Number
 
 });
-var Links = mongoose.model("Links", linkSchema);
+var Links = mongoose.model("Links",linkSchema);
 
 app.post("/links", function (req, res) {
 
     console.log(req.body);
-    var newLinks = new Links({
-        "title": req.body.title,
-        "link": req.body.link,
-        "clicks": 0
-    });
+    var newLinks = new Links({"title":req.body.title,
+        "link":req.body.link,
+        "clicks":0});
 
     newLinks.save(function (error) {
         if (error !== null) {
@@ -64,13 +62,7 @@ app.get("/click/:title", function (req, res) {
 
     console.log(req.params.title);
 
-    Links.findOneAndUpdate({
-        "title": req.params.title
-    }, {
-        $inc: {
-            "clicks": 1
-        }
-    }, function (err, result) {
+    Links.findOneAndUpdate({"title" : decodeURI(req.params.title)},{ $inc : { "clicks" : 1 }}, function (err, result) {
         if (err !== null) {
             console.log(err);
             res.send("ERROR");

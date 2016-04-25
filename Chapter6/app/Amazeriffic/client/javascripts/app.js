@@ -77,47 +77,31 @@ var main = function (toDoObjects) {
                     $tagLabel = $("<p>").text("Tags: "),
                     $button = $("<button>").text("+");
 
-                $button.on("click", function () {
-                    var description = $input.val(),
-                        tags = $tagInput.val().split(","),
-                        // create the new to-do item
-                        newToDo = {"description":description, "tags":tags};
-                                 
-                    toDoObjects.push({"description":description, "tags":tags});
+    $button.on("click", function () {
+    var description = $input.val(),
+        tags = $tagInput.val().split(","),
+        // create the new to-do item
+        newToDo = {"description":description, "tags":tags};
 
-                    // here we'll do a quick post to our todos route
-                    $.post("todos", newToDo, function (response) {
-                        console.log("We posted and the server responded!");
-                        console.log(response);
-                    });
-                    
-                    // update toDos
-                    toDos = toDoObjects.map(function (toDo) {
-                        return toDo.description;
-                    });
+    $.post("todos", newToDo, function (result) {
+        console.log(result);
 
-                    $input.val("");
-                    $tagInput.val("");
-                });
+        // we'll wait to push the new object
+        // on the client until after the server
+        // returns
+        toDoObjects.push(newToDo);
 
-                $content = $("<div>").append($inputLabel)
-                                     .append($input)
-                                     .append($tagLabel)
-                                     .append($tagInput)
-                                     .append($button);
-            }
-
-            $("main .content").append($content);
-
-            return false;
+        // update toDos
+        toDos = toDoObjects.map(function (toDo) {
+            return toDo.description;
         });
-    });
 
-    $(".tabs a:first-child span").trigger("click");
-};
-
-$(document).ready(function () {
-    $.getJSON("todos.json", function (toDoObjects) {
-        main(toDoObjects);
+        $input.val("");
+        $tagInput.val("");
     });
 });
+
+                
+};
+
+$(document).ready(main);

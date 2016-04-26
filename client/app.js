@@ -138,7 +138,7 @@ var main = function (toDoObjects) {
             $new_tags = msg.tags,
             $new_item = $("<li>").text($new_desc).hide();
 
-
+// A notify microservice function which provides notification
         function notifyMe(params) {
             if (!("Notification" in window)) {
                 alert("This browser does not support desktop notification");

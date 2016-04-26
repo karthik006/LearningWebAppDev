@@ -138,19 +138,38 @@ var main = function (toDoObjects) {
             $new_tags = msg.tags,
             $new_item = $("<li>").text($new_desc).hide();
 
+			
+ function notifyMe(params) {
+  if (!("Notification" in window)) {
+    alert("This browser does not support desktop notification");
+  }
+  else if (Notification.permission === "granted") {
+    // If it's okay let's create a notification
+    var notification = new Notification(params);
+  }
+   else if (Notification.permission !== 'denied') {
+    Notification.requestPermission(function (permission) {
+      // If the user accepts, let's create a notification
+      if (permission === "granted") {
+        var notification = new Notification(params);
+      }
+    });
+  }
+}
         if (($new_tab.length) > 0) {
             $new_tab.prepend($new_item);
             $new_item.slideDown(500);
-            alert("New ToDO " + $new_tags + " has been added");
+            //alert("New ToDO " + $new_tags + " has been added");
+			notifyMe("New ToDO " + $new_tags + " has been added to the list");
         } else if (($old_tab.length) > 0) {
             $old_tab.append($new_item);
             $new_item.slideDown(500);
-            alert("New ToDO " + $new_tags + " has been added");
+            notifyMe("New ToDO " + $new_tags + " has been added to the list");
         } else if (($tag_tab.length) > 0) {
             $("main .content").append($("<h3>").text($new_tags));
             $("main .content").append($new_item);
             $new_item.slideDown(500);
-            alert("New Tag " + $new_tags + " has been added");
+            notifyMe("New ToDO " + $new_tags + " has been added to the list");
         }
     });
 };

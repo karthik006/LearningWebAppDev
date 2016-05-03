@@ -10,7 +10,6 @@ var  bodyParser = require("body-parser");
 
 
 var redisClient = redis.createClient();
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));

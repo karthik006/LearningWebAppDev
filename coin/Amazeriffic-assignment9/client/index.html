@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Amazeriffic!</title>
+    <link href="stylesheets/style.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>Amazeriffic!</h1>
+            <nav>
+                <a href="#">Sign Up!</a> |
+                <a href="#">FAQ</a> |
+                <a href="#">Support</a>
+            </nav>
+        </div>
+    </header>
+
+
+    <main>
+        <div class="container">
+            <div class="tabs" data-bind="foreach: tabs">
+                <a href=""><span data-bind="$data: activeTab().name, 
+                   click: $parent.activeTab,
+                   css:  { active: ifActive },
+                   text: name"></span></a>
+            </div>
+            <div class="content" data-bind="visible: activeTab().name=='new'">
+                <ul data-bind="foreach: todos.slice(0).reverse()">
+                    <li data-bind="text: description"></li>
+                </ul>
+            </div>
+            <div class="content" data-bind="visible: activeTab().name=='old'">
+                <ul data-bind="foreach: todos">
+                    <li data-bind="text: description"></li>
+                </ul>
+            </div>
+            <div class="content" data-bind="visible: activeTab().name=='tag'">
+                <div data-bind="foreach: todoTags">
+                    
+                        <h3 data-bind="text: $data.name"></h3>
+
+                        <ul data-bind="foreach: $data.toDos">
+                            <li data-bind="text: $data"></li>
+                        </ul>
+                    
+                </div>
+            </div>
+            <div class="content" data-bind="visible: activeTab().name=='add'">
+                <p>Description:</p>
+                <input class="description" data-bind="value: new_description"/>
+                <p>Tags:</p>
+                <input class="tags" data-bind="value: new_tags"/>
+                <span data-bind="click:addItem">+</span>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="contact">
+                <h5>Contact Us</h5>
+                <p>Amazeriffic!</p>
+                <p>555 Fiftieth Street</p>
+                <p>Asheville, NC 28801</p>
+            </div>
+            <div class="sitemap">
+                <h5>Sitemap</h5>
+                <ul>
+                    <div class="left">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Privacy</a></li>
+                    </div>
+                    <div class="right">
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="knockout-3.4.0.js"></script>
+    <script src="javascripts/app.js"></script>
+</body>
+
+</html>

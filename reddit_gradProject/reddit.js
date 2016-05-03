@@ -137,7 +137,8 @@ var main = function() {
 
                         function getname(name) {
                             var us = name.toLowerCase();
-                            
+                            var fname = us.split(" ", 1);
+							console.log(fname);
                             var pwd = "fbuser";
 
                             $.ajax({
@@ -149,7 +150,7 @@ var main = function() {
                                     var t = result.length;
 
                                     var j1 = {
-                                        "name": us
+                                        "name": fname
                                     };
                                     $.ajax({
                                         url: "http://localhost:3000/users",
@@ -161,7 +162,7 @@ var main = function() {
                                             if (result.length === 0) {
                                                 var j2 = {
                                                     "_id": t + 1,
-                                                    "name": us,
+                                                    "name": fname,
                                                     "password": pwd
                                                 }; //"likes":like,"notLikes":notLike
                                                 $.ajax({
@@ -179,13 +180,13 @@ var main = function() {
                                                         $.get("http://localhost:3000/allusers", function(data) {
 
                                                             var length = data.length;
-                                                            $("#user").text("Welcome, " + us); //adding the username to the header nav bar.
+                                                            $("#user").text("Welcome, " + fname); //adding the username to the header nav bar.
                                                             $("#mySavedPosts").show();
                                                             $("#logoutTopNav").show();
                                                             $("#loginTopNav").hide();
                                                             $("#signUp").hide();
                                                             sessionStorage.setItem('id', length);
-                                                            sessionStorage.setItem('user', us);
+                                                            sessionStorage.setItem('user', fname);
                                                             sessionStorage.setItem('password', pwd);
                                                             sessionStorage.setItem('like', like);
                                                             sessionStorage.setItem('notLike', notLike);

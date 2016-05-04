@@ -1,4 +1,6 @@
 /*globals $:false , jQuery:false*/
+// Client-side code
+/* jshint browser: true, jquery: true, curly: true, eqeqeq: true, forin: true, immed: true, indent: 4, latedef: true, newcap: true, nonew: true, quotmark: double, undef: true, unused: true, strict: true, trailing: true */
 var main = function() {
     "use strict";
 
@@ -40,11 +42,11 @@ var main = function() {
                 $(postsList).appendTo('div.postsContainer');
                 $("#postform")[0].reset();
                 $("ul.pagination").empty();
-
+                
                 pages(getData.length);
             }); //end of foreach function
             //session storage variable
-            share();
+share();
 
 
 
@@ -60,7 +62,7 @@ var main = function() {
 
                 x = a.replace(/^,|,$/g, '');
                 y = b.replace(/^,|,$/g, '');
-
+                
                 $("#user").text("Welcome, " + username); //adding the username to the header nav bar.
                 $("#logoutTopNav").show();
                 $("#loginTopNav").hide();
@@ -98,7 +100,7 @@ var main = function() {
             function share() {
                 $("img.facebook_Button").on("click", function() {
                     if (username) {
-
+                        
                         var $mainlink = $("div #" + this.id + "").find('a').attr('href');
 
                         FB.ui({
@@ -118,7 +120,7 @@ var main = function() {
                         );
                     } else {
                         alert("Oops!! You need to login first");
-
+						
                     }
                 });
             }
@@ -128,7 +130,7 @@ var main = function() {
                 FB.login(function(response) {
                     if (response.authResponse) {
                         FB.api('/me', function(response) {
-
+                            
                             var x = response.name;
 
                             getname(x);
@@ -136,10 +138,10 @@ var main = function() {
 
                         function getname(name) {
                             var us = name.toLowerCase();
-
+                           
                             var res = us.split(" ", 1);
                             var give = res.toString();
-
+                          
                             var pwd = "fbuser";
 
                             $.ajax({
@@ -159,7 +161,7 @@ var main = function() {
                                         contentType: "Application/Json",
                                         data: j1,
                                         success: function(result) {
-
+                                           
                                             if (result.length === 0) {
                                                 var j2 = {
                                                     "_id": t + 1,
@@ -171,7 +173,7 @@ var main = function() {
                                                     data: j2,
                                                     url: "http://localhost:3000/newuser",
                                                     success: function() {
-
+                                                        
                                                         alert("Registered successfully ,Use password: fbuser and your Username " + give + " to login next time ");
                                                         $('#modal3').closeModal();
                                                         $("div").removeClass("lean-overlay");
@@ -245,7 +247,7 @@ var main = function() {
 
                             //var result = test.slice(1,-1);
                             var userId = user.id;
-
+                           
                             $.ajax({
                                 type: "POST",
                                 url: "http://localhost:3000/users/",
@@ -654,7 +656,7 @@ var main = function() {
                             alert("Welcome !login Successful");
                             //tempObject to store initial get request value, in order to parse it later, then store in in user object.
                             var tempObject = result[0];
-
+                           
 
                             user.id = tempObject._id;
                             user.userName = tempObject.name;
@@ -714,7 +716,7 @@ var main = function() {
         //reflect the data from mongodb file, into the html page:
         if (typeof like !== 'undefined' || typeof notLike !== 'undefined') {
             if (like.length > 0 || notLike.length > 0 || like.indexOf(0) !== "" || notLike.indexOf(0) !== "" || like.indexOf(0) != undefined || notLike.indexOf(0) !== undefined || like.indexOf(0) != isNaN || notLike.indexOf(0) != isNaN) {
-
+                
 
                 like.forEach(function(element) {
                     if (element !== "") {
@@ -770,7 +772,7 @@ var main = function() {
                             contentType: "Application/Json",
                             data: j1,
                             success: function(result) {
-
+                              
                                 if (result.length === 0) {
 
                                     var j2 = {
@@ -792,7 +794,7 @@ var main = function() {
 
 
                                             $.get("http://localhost:3000/allusers", function(data) {
-
+                                              
                                                 var length = data.length;
                                                 $("#user").text("Welcome, " + us); //adding the username to the header nav bar.
                                                 $("#mySavedPosts").show();
@@ -872,7 +874,7 @@ var main = function() {
                     count++;
                 }
                 $("ul.pagination").empty();
-
+               
                 pages(len[0]);
             });
 
@@ -973,10 +975,10 @@ var main = function() {
                         if ((($("#input3").val() === undefined) || ($("#input3").val() === "")) && ((($("#input4").val() === undefined) || $("#input4").val() === ""))) {
                             element.preventDefault();
                             $.get("http://localhost:3000/posts", function(getData) {
-
+                               
                                 var x = getData.length;
                                 x = x + 1;
-
+                               
                                 $.post("http://localhost:3000/posts", {
                                     "id": x,
                                     "link_title": $("#input1").val(),
@@ -991,13 +993,13 @@ var main = function() {
                                     postFunction();
                                     $.get("http://localhost:3000/posts", function(getData) {
                                         var userposts = [];
-
+                                       
                                         getData.forEach(function(reddit) {
                                             if (reddit.username === username) {
                                                 userposts.push(reddit._id);
                                             }
                                         }); //forEach ending
-
+                                       
 
                                         $.ajax({
                                             type: "POST",
@@ -1025,10 +1027,10 @@ var main = function() {
                             var image = $("#input3").val();
                             if (image.match("^https?://(?:[a-z0-9\-]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\.(?:gif|.png|.jpg|.jpeg|.tif|.tiff|.bmp)$")) {
                                 $.get("http://localhost:3000/posts", function(getData) {
-
+                                    
                                     var y = getData.length;
                                     y = y + 1;
-
+                                 
                                     $.post("http://localhost:3000/posts", {
                                         "id": y,
                                         "link_title": $("#input1").val(),
@@ -1087,10 +1089,10 @@ var main = function() {
 
 
                                 $.get("http://localhost:3000/posts", function(getData) {
-
+                                   
                                     var z = getData.length;
                                     z = z + 1;
-
+                                   
                                     $.post("http://localhost:3000/posts", {
                                         "id": z,
                                         "link_title": $("#input1").val(),

@@ -1,8 +1,4 @@
 /*globals $:false , jQuery:false*/
-// Client-side code
-/* jshint browser: true, jquery: true, curly: true, eqeqeq: true, forin: true, immed: true, indent: 4, latedef: true, newcap: true, nonew: true, quotmark: double, undef: true, unused: true, strict: true, trailing: true */
-// Server-side code
-/* jshint node: true, curly: true, eqeqeq: true, forin: true, immed: true, indent: 4, latedef: true, newcap: true, nonew: true, quotmark: double, undef: true, unused: true, strict: true, trailing: true */
 var main = function() {
     "use strict";
 
@@ -44,10 +40,11 @@ var main = function() {
                 $(postsList).appendTo('div.postsContainer');
                 $("#postform")[0].reset();
                 $("ul.pagination").empty();
+
                 pages(getData.length);
             }); //end of foreach function
             //session storage variable
-
+            share();
 
 
 
@@ -63,7 +60,7 @@ var main = function() {
 
                 x = a.replace(/^,|,$/g, '');
                 y = b.replace(/^,|,$/g, '');
-                
+
                 $("#user").text("Welcome, " + username); //adding the username to the header nav bar.
                 $("#logoutTopNav").show();
                 $("#loginTopNav").hide();
@@ -97,39 +94,41 @@ var main = function() {
 
 
 
-            //facebook share	  
-            $("img.facebook_Button").on("click", function() {
-                if (username) {
-                    var $mainlink = $("div #" + this.id + "").find('a').attr('href');
+            //facebook share
+            function share() {
+                $("img.facebook_Button").on("click", function() {
+                    if (username) {
 
-                    FB.ui({
-                            method: 'share',
-                            href: $mainlink,
-                        },
-                        // callback
-                        function(response) {
-                            if (response && !response.error_message) {
-                                var $toastContent = $('<span>Posted successfully</span>');
-                                Materialize.toast($toastContent, 4000);
-                            } else {
-                                var $toastContenterror = $('<span>OoPs Something went wrong!Post couldnot be shared</span>');
-                                Materialize.toast($toastContenterror, 4000);
+                        var $mainlink = $("div #" + this.id + "").find('a').attr('href');
+
+                        FB.ui({
+                                method: 'share',
+                                href: $mainlink,
+                            },
+                            // callback
+                            function(response) {
+                                if (response && !response.error_message) {
+                                    var $toastContent = $('<span>Posted successfully</span>');
+                                    Materialize.toast($toastContent, 4000);
+                                } else {
+                                    var $toastContenterror = $('<span>OoPs Something went wrong!Post couldnot be shared</span>');
+                                    Materialize.toast($toastContenterror, 4000);
+                                }
                             }
-                        }
-                    );
-                } else {
-                    var $login = $('<span>Oops!! you need to log  in first</span>');
-                    Materialize.toast($login, 4000);
-                }
-            });
+                        );
+                    } else {
+                        alert("Oops!! You need to login first");
 
+                    }
+                });
+            }
 
             //facebook login
             $("img#fb_login").on("click", function() {
                 FB.login(function(response) {
                     if (response.authResponse) {
                         FB.api('/me', function(response) {
-                            
+
                             var x = response.name;
 
                             getname(x);
@@ -137,8 +136,10 @@ var main = function() {
 
                         function getname(name) {
                             var us = name.toLowerCase();
-                            var fname = us.split(" ", 1);
-							console.log(fname);
+
+                            var res = us.split(" ", 1);
+                            var give = res.toString();
+
                             var pwd = "fbuser";
 
                             $.ajax({
@@ -150,7 +151,7 @@ var main = function() {
                                     var t = result.length;
 
                                     var j1 = {
-                                        "name": fname
+                                        "name": give
                                     };
                                     $.ajax({
                                         url: "http://localhost:3000/users",
@@ -162,7 +163,7 @@ var main = function() {
                                             if (result.length === 0) {
                                                 var j2 = {
                                                     "_id": t + 1,
-                                                    "name": fname,
+                                                    "name": give,
                                                     "password": pwd
                                                 }; //"likes":like,"notLikes":notLike
                                                 $.ajax({
@@ -170,8 +171,8 @@ var main = function() {
                                                     data: j2,
                                                     url: "http://localhost:3000/newuser",
                                                     success: function() {
-                                                      
-                                                        alert("Registered successfully ,Use password: fbuser and your facebook username to login next time ");
+
+                                                        alert("Registered successfully ,Use password: fbuser and your Username " + give + " to login next time ");
                                                         $('#modal3').closeModal();
                                                         $("div").removeClass("lean-overlay");
                                                         like = [];
@@ -180,13 +181,13 @@ var main = function() {
                                                         $.get("http://localhost:3000/allusers", function(data) {
 
                                                             var length = data.length;
-                                                            $("#user").text("Welcome, " + fname); //adding the username to the header nav bar.
+                                                            $("#user").text("Welcome, " + give); //adding the username to the header nav bar.
                                                             $("#mySavedPosts").show();
                                                             $("#logoutTopNav").show();
                                                             $("#loginTopNav").hide();
                                                             $("#signUp").hide();
                                                             sessionStorage.setItem('id', length);
-                                                            sessionStorage.setItem('user', fname);
+                                                            sessionStorage.setItem('user', give);
                                                             sessionStorage.setItem('password', pwd);
                                                             sessionStorage.setItem('like', like);
                                                             sessionStorage.setItem('notLike', notLike);
@@ -244,7 +245,7 @@ var main = function() {
 
                             //var result = test.slice(1,-1);
                             var userId = user.id;
-                            
+
                             $.ajax({
                                 type: "POST",
                                 url: "http://localhost:3000/users/",
@@ -443,11 +444,11 @@ var main = function() {
                 $("div.postsContainer").empty();
                 newest.forEach(function(reddit) {
                     var imgId = reddit._id;
-                    var postsList = "<div class ='postContent z-depth-1'>" +
+                    var postsList = "<div id=" + imgId + " class ='postContent z-depth-1'>" +
                         "<div class = 'votes'>" +
                         "<img  id=" + imgId + " class='voteUpButton' src='image/up.png'>" +
                         "<img  id=" + imgId + " class='voteUpButtonDisabled' src='image/upDisabled.png' style='opacity:0.4; display: none;'>" + "<br>" +
-                        "<strong id =" + reddit._id + " class='votesNum'>" + reddit.likes + "</strong>" + "<br>" +
+                        "<strong id =" + imgId + " class='votesNum'>" + reddit.likes + "</strong>" + "<br>" +
                         "<img  id=" + imgId + " class='voteDownButton' src='image/down.png'>" +
                         "<img  id=" + imgId + " class='voteDownButtonDisabled' src='image/downDisabled.png' style='opacity:0.4; display: none;'>" +
                         "</div>" + "<div class='image'>" + "<a href=" + JSON.stringify(reddit.main_link) + ">" +
@@ -457,29 +458,32 @@ var main = function() {
                         "<p class='postname'>" + reddit.link_title + "</p>" +
                         "<div class='subtitles'>" + "<p class='username'>By " + reddit.username + "</p>" +
                         "<p class='time'>" + timeSince(new Date(reddit.post_time)) + "</p>" + "</div>" + "</a>" +
+                        "<img  id=" + imgId + " class='facebook_Button' src='image/share.png'>" +
                         "</div>";
                     $(postsList).prependTo('div.postsContainer');
                     $("ul.pagination").empty();
                     pages(getData.length);
                 });
                 showUserHistory();
+                share();
                 clickLike();
                 clickNotLike();
 
             });
 
-            //Oldest tab click event:
+            //all stories tab click event:
             $("ul.tabs li:nth-child(2) a").on("click", function() {
-                location.reload(true);
+                //location.reload(true);
                 var oldest = getData;
+
                 $("div.postsContainer").empty();
                 oldest.forEach(function(reddit) {
                     var imgId = reddit._id;
-                    var postsList = "<div class ='postContent z-depth-1'>" +
+                    var postsList = "<div id=" + imgId + " class ='postContent z-depth-1'>" +
                         "<div class = 'votes'>" +
                         "<img  id=" + imgId + " class='voteUpButton' src='image/up.png'>" +
                         "<img  id=" + imgId + " class='voteUpButtonDisabled' src='image/upDisabled.png' style='opacity:0.4; display: none;'>" + "<br>" +
-                        "<strong id =" + reddit._id + " class='votesNum'>" + reddit.likes + "</strong>" + "<br>" +
+                        "<strong id =" + imgId + " class='votesNum'>" + reddit.likes + "</strong>" + "<br>" +
                         "<img  id=" + imgId + " class='voteDownButton' src='image/down.png'>" +
                         "<img  id=" + imgId + " class='voteDownButtonDisabled' src='image/downDisabled.png' style='opacity:0.4; display: none;'>" +
                         "</div>" + "<div class='image'>" + "<a href=" + JSON.stringify(reddit.main_link) + ">" +
@@ -489,13 +493,15 @@ var main = function() {
                         "<p class='postname'>" + reddit.link_title + "</p>" +
                         "<div class='subtitles'>" + "<p class='username'>By " + reddit.username + "</p>" +
                         "<p class='time'>" + timeSince(new Date(reddit.post_time)) + "</p>" + "</div>" + "</a>" +
-                        "<img  id=" + imgId + " class='facebook_Button' src='image/share.png' >" +
+                        "<img  id=" + imgId + " class='facebook_Button' src='image/share.png'>" +
                         "</div>";
                     $(postsList).appendTo('div.postsContainer');
                     $("ul.pagination").empty();
+
                     pages(getData.length);
                 });
                 showUserHistory();
+                share();
                 clickLike();
                 clickNotLike();
 
@@ -511,11 +517,11 @@ var main = function() {
 
                 trending.forEach(function(reddit) {
                     var imgId = reddit._id;
-                    var postsList = "<div class ='postContent z-depth-1'>" +
+                    var postsList = "<div id=" + imgId + " class ='postContent z-depth-1'>" +
                         "<div class = 'votes'>" +
                         "<img  id=" + imgId + " class='voteUpButton' src='image/up.png'>" +
                         "<img  id=" + imgId + " class='voteUpButtonDisabled' src='image/upDisabled.png' style='opacity:0.4; display: none;'>" + "<br>" +
-                        "<strong id =" + reddit._id + " class='votesNum'>" + reddit.likes + "</strong>" + "<br>" +
+                        "<strong id =" + imgId + " class='votesNum'>" + reddit.likes + "</strong>" + "<br>" +
                         "<img  id=" + imgId + " class='voteDownButton' src='image/down.png'>" +
                         "<img  id=" + imgId + " class='voteDownButtonDisabled' src='image/downDisabled.png' style='opacity:0.4; display: none;'>" +
                         "</div>" + "<div class='image'>" + "<a href=" + JSON.stringify(reddit.main_link) + ">" +
@@ -525,13 +531,14 @@ var main = function() {
                         "<p class='postname'>" + reddit.link_title + "</p>" +
                         "<div class='subtitles'>" + "<p class='username'>By " + reddit.username + "</p>" +
                         "<p class='time'>" + timeSince(new Date(reddit.post_time)) + "</p>" + "</div>" + "</a>" +
-
-                        +"</div>";
+                        "<img  id=" + imgId + " class='facebook_Button' src='image/share.png'>" +
+                        "</div>";
                     $(postsList).appendTo('div.postsContainer');
                     $("ul.pagination").empty();
                     pages(getData.length);
                 });
                 showUserHistory();
+                share();
                 clickLike();
                 clickNotLike();
 
@@ -543,26 +550,27 @@ var main = function() {
                 getData.forEach(function(reddit) {
                     if (reddit.username === username) {
                         var imgId = reddit._id;
-                        var postsList = "<div class ='postContent z-depth-1'>" +
+                        var postsList = "<div id=" + imgId + " class ='postContent z-depth-1'>" +
                             "<div class = 'votes'>" +
                             "<img  id=" + imgId + " class='voteUpButton' src='image/up.png'>" +
                             "<img  id=" + imgId + " class='voteUpButtonDisabled' src='image/upDisabled.png' style='opacity:0.4; display: none;'>" + "<br>" +
-                            "<strong id =" + reddit._id + " class='votesNum'>" + reddit.likes + "</strong>" + "<br>" +
+                            "<strong id =" + imgId + " class='votesNum'>" + reddit.likes + "</strong>" + "<br>" +
                             "<img  id=" + imgId + " class='voteDownButton' src='image/down.png'>" +
                             "<img  id=" + imgId + " class='voteDownButtonDisabled' src='image/downDisabled.png' style='opacity:0.4; display: none;'>" +
                             "</div>" + "<div class='image'>" + "<a href=" + JSON.stringify(reddit.main_link) + ">" +
-                            "<img id=" + imgId + " src=" + JSON.stringify(reddit.image_link) + " class='postimage'>" + "</a>" + "</div>" +
+                            "<img autoplay='true' src=" + JSON.stringify(reddit.image_link) + " class='postimage'>" + "</a>" + "</div>" +
                             "<div class='Content-List'>" +
                             "<a href=" + JSON.stringify(reddit.main_link) + ">" +
                             "<p class='postname'>" + reddit.link_title + "</p>" +
                             "<div class='subtitles'>" + "<p class='username'>By " + reddit.username + "</p>" +
-                            "<p class='time'>" + timeSince(new Date(reddit.post_time)) + "</p>"
-                        "</div>" + "</a>" +
-                        "</div>";
+                            "<p class='time'>" + timeSince(new Date(reddit.post_time)) + "</p>" + "</div>" + "</a>" +
+                            "<img  id=" + imgId + " class='facebook_Button' src='image/share.png'>" +
+                            "</div>";
                         $(postsList).prependTo('div.postsContainer');
                     }
                     $("ul.pagination").empty();
                     pages(getData.length);
+                    share();
                 }); //forEach ending
                 //$("ul.pagination").empty();
                 like.forEach(function(element) {
@@ -619,7 +627,6 @@ var main = function() {
             //initilaizing user object to zero.
             username = document.getElementById("username").value;
             pwd = document.getElementById("password").value;
-            
             if (username === "") {
                 alert("OOPS! Please enter your username");
             } else if (pwd === "") {
@@ -647,7 +654,7 @@ var main = function() {
                             alert("Welcome !login Successful");
                             //tempObject to store initial get request value, in order to parse it later, then store in in user object.
                             var tempObject = result[0];
-                            
+
 
                             user.id = tempObject._id;
                             user.userName = tempObject.name;
@@ -665,14 +672,14 @@ var main = function() {
                                 for (var i = 0, l = like.length; i < l; i++) {
                                     if (typeof(like[i]) == 'undefined') {
                                         like.splice(i, 1);
-                                    }
+                                    };
                                 };
                             } else if (notLike !== undefined) {
                                 for (var i = 0, l = notLike.length; i < l; i++) {
                                     if (typeof(notLike[i]) == 'undefined') {
                                         notLike.splice(i, 1);
-                                    }
-                                }
+                                    };
+                                };
 
                             }
 
@@ -706,8 +713,7 @@ var main = function() {
     function showUserHistory() {
         //reflect the data from mongodb file, into the html page:
         if (typeof like !== 'undefined' || typeof notLike !== 'undefined') {
-            if (like.length > 0 || notLike.length > 0 || like.indexOf(0) !== "" || notLike.indexOf(0) !== "" || like.indexOf(0) !== undefined || notLike.indexOf(0) !== undefined || like.indexOf(0) !== isNaN || notLike.indexOf(0) !== isNaN) {
-                
+            if (like.length > 0 || notLike.length > 0 || like.indexOf(0) !== "" || notLike.indexOf(0) !== "" || like.indexOf(0) != undefined || notLike.indexOf(0) !== undefined || like.indexOf(0) != isNaN || notLike.indexOf(0) != isNaN) {
 
 
                 like.forEach(function(element) {
@@ -764,7 +770,7 @@ var main = function() {
                             contentType: "Application/Json",
                             data: j1,
                             success: function(result) {
-                                
+
                                 if (result.length === 0) {
 
                                     var j2 = {
@@ -786,7 +792,7 @@ var main = function() {
 
 
                                             $.get("http://localhost:3000/allusers", function(data) {
-                                                
+
                                                 var length = data.length;
                                                 $("#user").text("Welcome, " + us); //adding the username to the header nav bar.
                                                 $("#mySavedPosts").show();
@@ -866,7 +872,7 @@ var main = function() {
                     count++;
                 }
                 $("ul.pagination").empty();
-                
+
                 pages(len[0]);
             });
 
@@ -967,10 +973,10 @@ var main = function() {
                         if ((($("#input3").val() === undefined) || ($("#input3").val() === "")) && ((($("#input4").val() === undefined) || $("#input4").val() === ""))) {
                             element.preventDefault();
                             $.get("http://localhost:3000/posts", function(getData) {
-                               
+
                                 var x = getData.length;
                                 x = x + 1;
-                                
+
                                 $.post("http://localhost:3000/posts", {
                                     "id": x,
                                     "link_title": $("#input1").val(),
@@ -985,13 +991,14 @@ var main = function() {
                                     postFunction();
                                     $.get("http://localhost:3000/posts", function(getData) {
                                         var userposts = [];
-                                        
+
                                         getData.forEach(function(reddit) {
                                             if (reddit.username === username) {
                                                 userposts.push(reddit._id);
                                             }
                                         }); //forEach ending
-                                        
+
+
                                         $.ajax({
                                             type: "POST",
                                             url: "http://localhost:3000/addmyposts",
@@ -1018,10 +1025,10 @@ var main = function() {
                             var image = $("#input3").val();
                             if (image.match("^https?://(?:[a-z0-9\-]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\.(?:gif|.png|.jpg|.jpeg|.tif|.tiff|.bmp)$")) {
                                 $.get("http://localhost:3000/posts", function(getData) {
-                                  
+
                                     var y = getData.length;
                                     y = y + 1;
-                                    
+
                                     $.post("http://localhost:3000/posts", {
                                         "id": y,
                                         "link_title": $("#input1").val(),
@@ -1080,10 +1087,10 @@ var main = function() {
 
 
                                 $.get("http://localhost:3000/posts", function(getData) {
-                                  
+
                                     var z = getData.length;
                                     z = z + 1;
-                                    
+
                                     $.post("http://localhost:3000/posts", {
                                         "id": z,
                                         "link_title": $("#input1").val(),

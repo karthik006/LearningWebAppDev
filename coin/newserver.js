@@ -32,7 +32,6 @@ redisClient.mget(["wins", "losses"], function (err, results) {
         console.log(selection);
         console.log("I choose " + selection);
 
-
         var result = Math.floor(Math.random() * 2) === 0 ? "heads" : "tails";
         console.log("Randomly generated: " + result);
 
